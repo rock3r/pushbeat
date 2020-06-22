@@ -1,0 +1,134 @@
+build:
+  maxIssues: 0
+  excludeCorrectable: false
+  weights:
+  # complexity: 2
+  # LongParameterList: 1
+  # style: 1
+  # comments: 1
+
+config:
+  validation: true
+  # when writing own rules with new properties, exclude the property path e.g.: 'my_rule_set,.*>.*>[my_property]'
+  excludes: ''
+
+processors:
+  active: true
+  exclude:
+    - 'DetektProgressListener'
+  # - 'FunctionCountProcessor'
+  # - 'PropertyCountProcessor'
+  # - 'ClassCountProcessor'
+  # - 'PackageCountProcessor'
+  # - 'KtFileCountProcessor'
+
+console-reports:
+  active: true
+  exclude:
+    - 'ProjectStatisticsReport'
+    - 'ComplexityReport'
+    - 'NotificationReport'
+    #  - 'FindingsReport'
+    - 'FileBasedFindingsReport'
+
+complexity:
+  active: true
+  LongParameterList:
+    active: true
+    functionThreshold: 7
+    constructorThreshold: 7
+    ignoreDefaultParameters: false
+    ignoreDataClasses: true
+    ignoreAnnotated: []
+  TooManyFunctions:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
+    thresholdInFiles: 20
+    thresholdInClasses: 15
+    thresholdInInterfaces: 15
+    thresholdInObjects: 11
+    thresholdInEnums: 11
+    ignoreDeprecated: false
+    ignorePrivate: true
+    ignoreOverridden: true
+
+formatting:
+  active: true
+  Indentation:
+    active: true
+    autoCorrect: true
+    indentSize: 4
+    continuationIndentSize: 4
+  MaximumLineLength:
+    active: true
+    maxLineLength: 150
+
+naming:
+  active: true
+  ConstructorParameterNaming:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
+    parameterPattern: '`?[a-z][A-Za-z0-9]*`?'
+    privateParameterPattern: '`?[a-z][A-Za-z0-9]*`?'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+  VariableNaming:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
+    variablePattern: '`?[a-z][A-Za-z0-9]*`?'
+    privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
+    excludeClassPattern: '$^'
+    ignoreOverridden: true
+
+performance:
+  active: true
+  SpreadOperator:
+    active: false
+    excludes: ['**/test/**', '**/androidTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
+
+style:
+  active: true
+  ForbiddenComment:
+    active: true
+    values: ['STOPSHIP']
+    allowedPatterns: ''
+  LoopWithTooManyJumpStatements:
+    active: true
+    maxJumpCount: 3
+  MagicNumber:
+    active: true
+    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.Test.kt', '**/*.Spec.kt', '**/*.Spek.kt']
+    ignoreNumbers: ['-1', '0', '1', '2']
+    ignoreHashCodeFunction: true
+    ignorePropertyDeclaration: true
+    ignoreLocalVariableDeclaration: true
+    ignoreConstantDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignoreAnnotation: true
+    ignoreNamedArgument: true
+    ignoreEnums: true
+    ignoreRanges: true
+  MandatoryBracesLoops:
+    active: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 150
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: false
+  ReturnCount:
+    active: true
+    max: 5
+    excludedFunctions: 'equals'
+    excludeLabeled: false
+    excludeReturnFromLambda: true
+    excludeGuardClauses: false
+  ThrowsCount:
+    active: true
+    max: 5
+  TrailingWhitespace:
+    active: true
+  UnusedImports:
+    active: true
+  VarCouldBeVal:
+    active: true
