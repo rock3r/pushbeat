@@ -4,13 +4,12 @@ package dev.sebastiano.pushbeat.api.ktor
 
 import io.ktor.locations.Location
 
-@Location("/location/{name}")
-class MyLocation(val name: String, val arg1: Int = 42, val arg2: String = "default")
+@Location("/beats")
+class BeatsLocation
 
-@Location("/type/{name}") data class Type(val name: String) {
-    @Location("/edit")
-    data class Edit(val type: Type)
+@Location("/beat/{id}")
+class BeatLocation(val id: String) {
 
-    @Location("/list/{page}")
-    data class List(val type: Type, val page: Int)
+    @Location("/refresh")
+    class Refresh(val beatLocation: BeatLocation)
 }
