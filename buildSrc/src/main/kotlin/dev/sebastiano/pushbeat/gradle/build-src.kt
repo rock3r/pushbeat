@@ -8,4 +8,4 @@ fun isCi() = System.getenv("CI") != null ||
     System.getenv("CONTINUOUS_INTEGRATION") != null ||
     System.getenv("TEAMCITY_VERSION") != null
 
-fun Project.buildConfigFile(path: String) = File(rootDir, "../build-config/$path")
+fun Project.buildConfigFile(path: String) = File(rootDir, "build-config/$path")

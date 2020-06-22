@@ -2,15 +2,20 @@
 
 package dev.sebastiano.pushbeat.api
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.http.*
-import io.ktor.html.*
-import kotlinx.html.*
-import io.ktor.auth.*
-import io.ktor.locations.*
-import io.ktor.features.*
+import dev.sebastiano.pushbeat.api.ktor.setupRouting
+import io.ktor.application.Application
+import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.UserIdPrincipal
+import io.ktor.auth.basic
+import io.ktor.features.Compression
+import io.ktor.features.ContentNegotiation
+import io.ktor.features.DefaultHeaders
+import io.ktor.features.deflate
+import io.ktor.features.gzip
+import io.ktor.features.minimumSize
+import io.ktor.locations.Location
+import io.ktor.locations.Locations
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -27,10 +32,9 @@ fun Application.module(testing: Boolean = false) {
     install(Locations) {
     }
 
+    @Suppress("MagicNumber") // Just one-off configuration
     install(Compression) {
-        gzip {
-            priority = 1.0
-        }
+        gzip()
         deflate {
             priority = 10.0
             minimumSize(1024) // condition
@@ -44,52 +48,7 @@ fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation) {
     }
 
-    routing {
-        get("/") {
-            call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
-        }
-
-        get("/html-dsl") {
-            call.respondHtml {
-                body {
-                    h1 { +"HTML" }
-                    ul {
-                        for (n in 1..10) {
-                            li { +"$n" }
-                        }
-                    }
-                }
-            }
-        }
-
-        authenticate("myBasicAuth") {
-            get("/protected/route/basic") {
-                val principal = call.principal<UserIdPrincipal>()!!
-                call.respondText("Hello ${principal.name}")
-            }
-        }
-
-        get<MyLocation> {
-            call.respondText("Location: name=${it.name}, arg1=${it.arg1}, arg2=${it.arg2}")
-        }
-        // Register nested routes
-        get<Type.Edit> {
-            call.respondText("Inside $it")
-        }
-        get<Type.List> {
-            call.respondText("Inside $it")
-        }
-
-        install(StatusPages) {
-            exception<AuthenticationException> { cause ->
-                call.respond(HttpStatusCode.Unauthorized)
-            }
-            exception<AuthorizationException> { cause ->
-                call.respond(HttpStatusCode.Forbidden)
-            }
-
-        }
-    }
+    setupRouting()
 }
 
 @Location("/location/{name}")
@@ -105,4 +64,3 @@ class MyLocation(val name: String, val arg1: Int = 42, val arg2: String = "defau
 
 class AuthenticationException : RuntimeException()
 class AuthorizationException : RuntimeException()
-
