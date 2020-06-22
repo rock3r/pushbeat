@@ -2,8 +2,6 @@ package dev.sebastiano.pushbeat.api.ktor
 
 import dev.sebastiano.pushbeat.api.AuthenticationException
 import dev.sebastiano.pushbeat.api.AuthorizationException
-import dev.sebastiano.pushbeat.api.MyLocation
-import dev.sebastiano.pushbeat.api.Type
 import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.application.install

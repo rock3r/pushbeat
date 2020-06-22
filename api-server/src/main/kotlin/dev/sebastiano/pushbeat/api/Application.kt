@@ -14,7 +14,6 @@ import io.ktor.features.DefaultHeaders
 import io.ktor.features.deflate
 import io.ktor.features.gzip
 import io.ktor.features.minimumSize
-import io.ktor.locations.Location
 import io.ktor.locations.Locations
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -50,17 +49,3 @@ fun Application.module(testing: Boolean = false) {
 
     setupRouting()
 }
-
-@Location("/location/{name}")
-class MyLocation(val name: String, val arg1: Int = 42, val arg2: String = "default")
-
-@Location("/type/{name}") data class Type(val name: String) {
-    @Location("/edit")
-    data class Edit(val type: Type)
-
-    @Location("/list/{page}")
-    data class List(val type: Type, val page: Int)
-}
-
-class AuthenticationException : RuntimeException()
-class AuthorizationException : RuntimeException()
