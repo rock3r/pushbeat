@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Work+Sans:ital,wght@0,400;0,550;1,400;1,550&display=swap');
+
+body {
+    font-family: 'Work Sans', sans-serif;
+}
+
+a.refresh {
+    font-size: small;
+}
+
+code {
+    background-color: #eee;
+    border-radius: 3px;
+    font-family: 'Roboto Mono', courier, monospace;
+    padding: 0 3px;
+}
+
+.secondary {
+    opacity: .75;
+}

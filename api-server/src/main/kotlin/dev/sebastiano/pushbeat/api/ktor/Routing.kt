@@ -11,6 +11,9 @@ import io.ktor.application.Application
 import io.ktor.application.call
 import io.ktor.auth.authenticate
 import io.ktor.html.respondHtml
+import io.ktor.http.content.defaultResource
+import io.ktor.http.content.resources
+import io.ktor.http.content.static
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.delete
 import io.ktor.locations.get
@@ -47,6 +50,12 @@ internal fun Application.setupRouting(json: Json, registry: BeatSourcesRegistry)
             get<BeatLocation.Refresh> {
                 call.handleGetRefreshBeat(json, registry, it.beatLocation.id)
             }
+        }
+
+        static("static") {
+            resources("css")
+            resources("js")
+            defaultResource("404.html")
         }
     }
 }
