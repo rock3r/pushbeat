@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization") version "1.3.72"
-    application
     war
 }
 
@@ -24,33 +23,27 @@ apply(plugin = "com.google.cloud.tools.appengine")
 
 configure<AppEngineStandardExtension> {
     deploy {
-        projectId = "pushbeat"
-        version = "1.0.0"
+        projectId = "GCLOUD_CONFIG"
+        version = "GCLOUD_CONFIG"
     }
-}
-
-application {
-    mainClassName = "io.ktor.server.netty.EngineMain"
 }
 
 repositories {
     maven { url = uri("https://kotlin.bintray.com/ktor") }
-    mavenCentral()
 }
 
 dependencies {
     val kotlinVersion = rootProject.extra["kotlin_version"]
     val ktorVersion = rootProject.extra["ktor_version"]
 
-    implementation(kotlin("stdlib"))
+    implementation(kotlin("stdlib-jdk8"))
 
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0")
 
-    implementation("io.ktor:ktor-server-netty:$ktorVersion")
-    implementation("io.ktor:ktor-server-core:$ktorVersion")
+    implementation("io.ktor:ktor-server-servlet:$ktorVersion")
     implementation("io.ktor:ktor-html-builder:$ktorVersion")
     implementation("io.ktor:ktor-auth:$ktorVersion")
     implementation("io.ktor:ktor-locations:$ktorVersion")
@@ -63,7 +56,7 @@ dependencies {
 }
 
 tasks {
-    named("run") {
+    val run by registering {
         dependsOn(named("appengineRun"))
     }
 

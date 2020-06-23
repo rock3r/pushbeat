@@ -21,10 +21,9 @@ import io.ktor.locations.Locations
 import io.ktor.request.accept
 import io.ktor.request.httpMethod
 import io.ktor.request.uri
+import io.ktor.server.servlet.ServletApplicationEngine
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
-
-fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 private val logger = LoggerFactory.getLogger("Ktor")
 
