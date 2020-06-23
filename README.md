@@ -1,4 +1,4 @@
-# pushbeat ![Build status](https://github.com/rock3r/pushbeat/workflows/gradle/badge.svg)
+# pushbeat ![Build status](https://github.com/rock3r/pushbeat/workflows/Check%20with%20Gradle/badge.svg)
 
 A sample GCP AppEngine Ktor REST API that showcases a simple RESTful API and a web UI.
 
