@@ -18,6 +18,7 @@ import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.delete
 import io.ktor.locations.get
 import io.ktor.locations.put
+import io.ktor.routing.Route
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -53,9 +54,13 @@ internal fun Application.setupRouting(json: Json, registry: BeatSourcesRegistry)
         }
 
         static("static") {
-            resources("css")
-            resources("js")
+            resourceFolder("css")
+            resourceFolder("js")
             defaultResource("404.html")
         }
     }
+}
+
+private fun Route.resourceFolder(name: String) {
+    static(name) { resources(name) }
 }
