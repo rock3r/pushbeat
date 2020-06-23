@@ -1,0 +1,31 @@
+### Get registered beat providers (HTML)
+GET {{base_url}}/
+Accept: 'text/html'
+Authorization: Basic {{username}} {{password}}
+
+### Get registered beat providers (API)
+GET {{base_url}}/beats
+Accept: application/json
+Authorization: Basic {{username}} {{password}}
+
+### Register beat provider by ID (API)
+PUT {{base_url}}/beat/test-beat
+Accept: application/json
+Content-Type: application/json
+Authorization: Basic {{username}} {{password}}
+
+{
+  "id": "test-beat",
+  "name": "Test beat",
+  "last_value": 82
+}
+
+### Get registered beat provider by ID (API)
+GET {{base_url}}/beat/test-beat
+Accept: application/json
+Authorization: Basic {{username}} {{password}}
+
+### Get refresh value for beat provider by ID (API)
+GET {{base_url}}/beat/test-beat/refresh
+Accept: application/json
+Authorization: Basic {{username}} {{password}}
