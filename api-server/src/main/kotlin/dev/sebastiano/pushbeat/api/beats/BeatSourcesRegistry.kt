@@ -8,15 +8,13 @@ internal object BeatSourcesRegistry {
 
     private val sources = mutableMapOf<String, BeatSource>()
 
-    fun get(sourceId: String): BeatSource? = sources[sourceId]
+    operator fun get(sourceId: String): BeatSource? = sources[sourceId]
 
     fun register(source: BeatSource) {
         sources[source.id] = source
     }
 
-    fun unregister(sourceId: String) {
-        sources.remove(sourceId)
-    }
+    fun unregister(sourceId: String): BeatSource? = sources.remove(sourceId)
 
     fun sources(): List<BeatSource> = sources.values.toList()
 }

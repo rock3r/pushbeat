@@ -56,11 +56,15 @@ dependencies {
 }
 
 tasks {
+    @Suppress("UNUSED_VARIABLE") // Used by Gradle
     val run by registering {
         dependsOn(named("appengineRun"))
     }
 
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        }
     }
 }

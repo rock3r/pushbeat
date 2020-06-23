@@ -21,14 +21,14 @@ import io.ktor.locations.Locations
 import io.ktor.request.accept
 import io.ktor.request.httpMethod
 import io.ktor.request.uri
-import io.ktor.server.servlet.ServletApplicationEngine
+import io.ktor.serialization.json
 import org.slf4j.LoggerFactory
 import org.slf4j.event.Level
 
 private val logger = LoggerFactory.getLogger("Ktor")
 
 @Suppress("unused") // Referenced in application.conf
-@kotlin.jvm.JvmOverloads
+@JvmOverloads
 fun Application.module(testing: Boolean = false) {
     setupAuthentication()
 
@@ -48,7 +48,10 @@ fun Application.module(testing: Boolean = false) {
         header("X-Engine", "Ktor") // will send this header with each response
     }
 
+    val json = createJsonInstance()
+
     install(ContentNegotiation) {
+        json(json)
     }
 
     install(CallLogging) {
@@ -62,8 +65,6 @@ fun Application.module(testing: Boolean = false) {
         }
     }
 
-    val json = createJsonInstance()
-
     setupStatusPages(json, logger)
-    setupRouting(BeatSourcesRegistry)
+    setupRouting(json, BeatSourcesRegistry)
 }
