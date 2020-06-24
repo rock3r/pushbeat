@@ -4,8 +4,12 @@ body {
     font-family: 'Work Sans', sans-serif;
 }
 
-a.refresh {
+span.refresh {
     font-size: small;
+    margin-left: 2em;
+    color: darkslategrey;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 code {

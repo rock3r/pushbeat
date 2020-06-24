@@ -2,8 +2,12 @@ package dev.sebastiano.pushbeat.api.ktor.html
 
 import dev.sebastiano.pushbeat.api.beats.BeatSourcesRegistry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.html.FlowOrPhrasingContent
 import kotlinx.html.HTML
+import kotlinx.html.HtmlTagMarker
 import kotlinx.html.LinkType
+import kotlinx.html.SPAN
+import kotlinx.html.attributesMapOf
 import kotlinx.html.b
 import kotlinx.html.body
 import kotlinx.html.br
@@ -13,7 +17,6 @@ import kotlinx.html.h2
 import kotlinx.html.head
 import kotlinx.html.i
 import kotlinx.html.li
-import kotlinx.html.link
 import kotlinx.html.onClick
 import kotlinx.html.p
 import kotlinx.html.script
@@ -21,6 +24,7 @@ import kotlinx.html.span
 import kotlinx.html.styleLink
 import kotlinx.html.title
 import kotlinx.html.ul
+import kotlinx.html.visit
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal fun HTML.renderRegisterBeats(registry: BeatSourcesRegistry) {
@@ -53,12 +57,9 @@ internal fun HTML.renderRegisterBeats(registry: BeatSourcesRegistry) {
                         }
                         br
                         +"Last BPM: ${source.beats.valueOrNull ?: "N/A"}"
-                        +"   "
                         span(classes = "refresh") {
-                            link {
-                                +"refresh"
-                                onClick = "refreshBeatValue(${source.id}); location.reload();"
-                            }
+                            onClick = "javascript:refreshBeatValue('${source.id}'); location.reload();"
+                            +"refresh"
                         }
                     }
                 }
@@ -66,3 +67,9 @@ internal fun HTML.renderRegisterBeats(registry: BeatSourcesRegistry) {
         }
     }
 }
+
+// This is a hack to work around a potential bug in the Span/DelayedConsumer implementation, where the attributes are set
+// too late and it results in an IllegalStateException
+@HtmlTagMarker
+private inline fun FlowOrPhrasingContent.span(classes: String? = null, onClick: String? = null, crossinline block: SPAN.() -> Unit = {}): Unit =
+    SPAN(attributesMapOf("class", classes, "onclick", onClick), consumer).visit(block)
