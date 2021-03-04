@@ -19,10 +19,10 @@ buildscript {
 }
 
 plugins {
-    kotlin("jvm") version "1.3.72" apply false
+    kotlin("jvm") version "1.4.31" apply false
     id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("org.jmailen.kotlinter") version "2.3.2"
-    id("com.github.ben-manes.versions") version "0.28.0"
+    id("com.github.ben-manes.versions") version "0.38.0"
 }
 
 group = "dev.sebastiano"
